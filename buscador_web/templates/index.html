@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Busca por Código de Rastreio</h2>
+  <form method="POST" class="my-4">
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Código de Rastreio</label>
+      <input type="text" class="form-control" id="codigo" name="codigo" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  {% if resultado %}
+    {% if resultado == "not_found" %}
+      <div class="alert alert-warning">Código não encontrado.</div>
+    {% elif resultado is string and resultado.startswith('erro:') %}
+      <div class="alert alert-danger">{{ resultado }}</div>
+    {% else %}
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Resultado</h5>
+          <p><strong>Remetente:</strong> {{ resultado.nome_remetente }}</p>
+          <p><strong>Código:</strong> {{ resultado.codigo_rastreio }}</p>
+          <p><strong>Valor:</strong> R$ {{ resultado.preco }}</p>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
