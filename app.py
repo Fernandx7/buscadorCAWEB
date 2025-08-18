@@ -60,12 +60,19 @@ def ca():
                 response = requests.get(CA_API_URL, params={"data": data_formatada})
                 data = response.json()
                 encontrados = data.get("resultados", [])
-                resultados = encontrados if encontrados else []
+                if encontrados: 
+                    resultados = encontrados 
+                else: 
+                    erro = "objetos não encontrados na data especificada."
         except ValueError:
             erro = "Formato de data inválido."
         except Exception as e:
-            erro = str(e)
+            erro = str(e) 
     return render_template("ca.html", resultados=resultados, erro=erro, data_str=data_str)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
