@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const body = document.querySelector("body");
 
-  // Aplica o fade-in na página ao carregar
   body.classList.add("fade-in");
 
-  // Suaviza a saída ao clicar em qualquer link interno
   const links = document.querySelectorAll("a[href^='/']");
   links.forEach(link => {
     link.addEventListener("click", function (e) {
@@ -14,11 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
       body.classList.add("fade-out");
       setTimeout(() => {
         window.location.href = href;
-      }, 300); // Tempo igual ao da transição CSS
+      }, 300); 
     });
   });
 
-  // Evita múltiplos envios nos formulários
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
     form.addEventListener("submit", function () {

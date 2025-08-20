@@ -1,14 +1,52 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 import requests
 import re
 from datetime import datetime
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
+app.secret_key = "chave"
+
+USUARIO = "Marcella"
+SENHA_HASH = generate_password_hash("@Marcella2025")
 
 API_URL = "http://131.163.96.121:8000/buscar?codigo_rastreio="
 CA_API_URL = "http://131.163.96.121:8000/buscar_ca?"
 
-@app.route("/", methods=["GET", "POST"])
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    erro = None
+    if request.method == "POST":
+        usuario = request.form.get("usuario", "")
+        senha = request.form.get("senha", "")
+        if usuario == USUARIO and check_password_hash(SENHA_HASH, senha):
+            session["usuario"] = usuario
+            return redirect(url_for("index"))
+        else:
+            erro = "Usuário ou senha incorretos."
+    return render_template("login.html", erro=erro)
+
+@app.route("/logout")
+def logout():
+    session.pop("usuario", None)
+    return redirect(url_for("login"))
+
+def login_requerido(func):
+    from functools import wraps
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if "usuario" not in session:
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+    return wrapper
+
+@app.route("/")
+def root():
+    return redirect(url_for("login"))
+
+@app.route("/individual", methods=["GET", "POST"])
+@login_requerido
 def index():
     resultado = None
     if request.method == "POST":
@@ -26,6 +64,7 @@ def index():
     return render_template("index.html", resultado=resultado)
 
 @app.route("/lote", methods=["GET", "POST"])
+@login_requerido
 def lote():
     resultados = []
     if request.method == "POST":
@@ -45,6 +84,7 @@ def lote():
     return render_template("lote.html", resultados=resultados)
 
 @app.route("/ca", methods=["GET", "POST"])
+@login_requerido
 def ca():
     resultados = []
     erro = None
@@ -72,7 +112,3 @@ def ca():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
