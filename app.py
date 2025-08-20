@@ -7,8 +7,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 app = Flask(__name__)
 app.secret_key = "chave"
 
-USUARIO = "Marcella"
-SENHA_HASH = generate_password_hash("@Marcella2025")
+USUARIO = {
+    "Marcella": generate_password_hash("@Marcella2025"),
+    "Fernando": generate_password_hash("@Fernando2025"),
+    "Marcia": generate_password_hash("@Marcia2025"),
+    "Anna": generate_password_hash("@Anna2025")
+}
+
 
 API_URL = "http://131.163.96.121:8000/buscar?codigo_rastreio="
 CA_API_URL = "http://131.163.96.121:8000/buscar_ca?"
@@ -20,7 +25,7 @@ def login():
     if request.method == "POST":
         usuario = request.form.get("usuario", "")
         senha = request.form.get("senha", "")
-        if usuario == USUARIO and check_password_hash(SENHA_HASH, senha):
+        if usuario in USUARIO and check_password_hash(USUARIO[usuario], senha):
             session["usuario"] = usuario
             return redirect(url_for("index"))
         else:
