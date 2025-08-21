@@ -9,9 +9,9 @@ app.secret_key = "chave"
 
 USUARIO = {
     "Marcella": generate_password_hash("@Marcella2025"),
-    "Fernando": generate_password_hash("@Fernando2025"),
-    "Marcia": generate_password_hash("@Marcia2025"),
-    "Anna": generate_password_hash("@Anna2025")
+    "Fernando": generate_password_hash("@Fernando0000"),
+    "Marcia": generate_password_hash("@Marcia0000"),
+    "Anna": generate_password_hash("@Anna0000")
 }
 
 

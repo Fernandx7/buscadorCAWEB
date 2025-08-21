@@ -34,3 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+const CA_API_URL = "http://131.163.96.121:8000/buscar?codigo_rastreio=QN240963095BR";
+
+fetch(CA_API_URL)
+  .then (Response => {
+    if (Response.status === 200){
+      document.getElementById("status-servidor").innerText = "Status Servidor: Online";
+    } else {
+      document.getElementById("status-servidor").innerText = "Status Servidor: Offline";
+    }
+  })
+  .catch(error => {
+    document.getElementById("status-servidor").textContent = "Status Servidor: Offline";
+  });
+
