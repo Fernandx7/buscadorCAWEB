@@ -35,17 +35,36 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-const CA_API_URL = "http://131.163.96.121:8000/buscar?codigo_rastreio=QN240963095BR";
+// const CA_API_URL = "https://131.163.96.121:8000/buscar?codigo_rastreio= ";
 
-fetch(CA_API_URL)
-  .then (Response => {
-    if (Response.status === 200){
-      document.getElementById("status-servidor").innerText = "Status Servidor: Online";
-    } else {
-      document.getElementById("status-servidor").innerText = "Status Servidor: Offline";
-    }
-  })
-  .catch(error => {
-    document.getElementById("status-servidor").textContent = "Status Servidor: Offline";
-  });
+// fetch(CA_API_URL)
+//   .then (Response => {
+//     if (Response.ok){
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Online";
+//     } else {
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Offline";
+//     }
+//   })
+//   .catch(error => {
+//     document.getElementById("status-servidor").textContent = "Status Servidor: Offline";
+//   });
 
+// fetch(CA_API_URL)
+//   .then(response => {
+//     // Verifica se a requisição foi bem-sucedida (status 200-299)
+//     if (response.ok) {
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Offline❌";
+//     } else {
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Online✳️";
+//     }
+//   })
+//   .catch(error => {
+//     // Se o erro for net::ERR_SSL_PROTOCOL_ERROR, consideramos o servidor como online
+//     if (error.message.includes('net::ERR_SSL_PROTOCOL_ERROR')) {
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Offline❌";
+//     }
+//     // Para outros erros, consideramos o servidor como offline
+//     else {
+//       document.getElementById("status-servidor").innerText = "Status Servidor: Online✳️";
+//     }
+//   });
